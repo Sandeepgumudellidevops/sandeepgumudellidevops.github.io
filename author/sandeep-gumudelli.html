@@ -18,7 +18,7 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/first-post-on-my-sweet-new-blog.html">First Post on My Sweet New Blog</a></h1>
+                    <h1 class="entry-title"><a href="/install-logstash-and-configure-using-s3-bucket-on-ubuntu.html">Install logstash and configure using s3 bucket on UBUNTU</a></h1>
 <footer class="post-info">
         <abbr class="published" title="2020-10-06T00:00:00+02:00">
                 Published: Tue 06 October 2020
@@ -29,11 +29,53 @@
         </address>
 <p>In <a href="/category/misc.html">misc</a>.</p>
 
-</footer><!-- /.post-info --><h1>I am On My Way To Internet Fame and Fortune!</h1>
-<p>This is my first post on my new blog. While not super informative it
-should convey my sense of excitement and eagerness to engage with you,
-the readet
-r</p>                </article>
+</footer><!-- /.post-info --><h1>I am On My Way To learning</h1>
+<p>Create Ubuntu Ec2 machine on AWS and connect to it using SSH.</p>
+<p>ssh -i <Pem key> ubuntu@<em>.</em>.<em>.</em></p>
+<p>wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -</p>
+<p>sudo apt-get install apt-transport-https</p>
+<p>echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list</p>
+<p>sudo apt-get update &amp;&amp; sudo apt-get install logstash</p>
+<p>root@ip-10-0-35-151:~# find / -name logstash -type f
+/usr/share/logstash/bin/logstash
+/etc/default/logstash</p>
+<p>export PATH=/usr/share/logstash/bin:${PATH}</p>
+<p>systemctl status logstash
+systemctl enable logstash
+systemctl start logstash
+systemctl stop logstash</p>
+<p>apt install -y mlocate</p>
+<p>updatedb</p>
+<p>cd /usr/share/logstash
+bin/logstash-plugin list</p>
+<p>cd /etc/logstash/conf.d/
+sudo vi s3_input.conf</p>
+<p>sudo systemctl start logstash</p>
+<p>mkdir /root/logstash</p>
+<p>vi /root/logstash/logstash.conf
+input {
+  s3 {
+    "access_key_id" =&gt; "access_key_here"
+    "secret_access_key" =&gt; "secret_key_here"
+    "region" =&gt; "eu-west-2"
+    "bucket" =&gt; "bucket_name_here"
+    #"prefix" =&gt; "Logs"
+    "interval" =&gt; "10"
+    "additional_settings" =&gt; {
+      "force_path_style" =&gt; true
+      "follow_redirects" =&gt; false
+      }
+  }
+}</p>
+<p>output {
+  elasticsearch {
+    hosts =&gt; [<elasticsearch_url>]
+    index =&gt; "logs-%{+YYYY.MM.dd}"
+    user =&gt; "username_here"
+    password =&gt; "Password_here"
+  }
+}</p>
+<p>logstash -f /root/logstash/logstash.conf</p>                </article>
             </aside><!-- /#featured -->
         <section id="extras" class="body">
                 <div class="blogroll">

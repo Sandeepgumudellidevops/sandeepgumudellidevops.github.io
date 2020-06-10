@@ -35,60 +35,71 @@
 <p>In <a href="/category/misc.html">misc</a>.</p>
 
 </footer><!-- /.post-info -->      <h1>I am On My Way To learning</h1>
-<div class="highlight"><pre><span></span><code><span class="k">Create</span> <span class="n">Ubuntu</span> <span class="n">Ec2</span> <span class="n">machine</span> <span class="k">on</span> <span class="n">AWS</span> <span class="k">and</span> <span class="k">connect</span> <span class="k">to</span> <span class="n">it</span> <span class="k">using</span> <span class="n">SSH</span><span class="p">.</span>
+<div class="highlight"><pre><span></span><code>Create Ubuntu Ec2 machine on AWS and connect to it using SSH.
 
-<span class="n">ssh</span> <span class="o">-</span><span class="n">i</span> <span class="o">&lt;</span><span class="n">Pem</span> <span class="k">key</span><span class="o">&gt;</span> <span class="n">ubuntu</span><span class="o">@*</span><span class="p">.</span><span class="o">*</span><span class="p">.</span><span class="o">*</span><span class="p">.</span><span class="o">*</span>
+ssh -i <span class="nt">&lt;Pem</span> <span class="err">key</span><span class="nt">&gt;</span> ubuntu@*.*.*.*
 
-<span class="n">wget</span> <span class="o">-</span><span class="n">qO</span> <span class="o">-</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">artifacts</span><span class="p">.</span><span class="n">elastic</span><span class="p">.</span><span class="n">co</span><span class="o">/</span><span class="n">GPG</span><span class="o">-</span><span class="k">KEY</span><span class="o">-</span><span class="n">elasticsearch</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="k">key</span> <span class="k">add</span> <span class="o">-</span>
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 
-<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="n">install</span> <span class="n">apt</span><span class="o">-</span><span class="n">transport</span><span class="o">-</span><span class="n">https</span>
+sudo apt-get install apt-transport-https
 
-<span class="n">echo</span> <span class="ss">&quot;deb https://artifacts.elastic.co/packages/7.x/apt stable main&quot;</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">tee</span> <span class="o">-</span><span class="n">a</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="p">.</span><span class="n">list</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">elastic</span><span class="o">-</span><span class="mi">7</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">list</span>
+echo &quot;deb https://artifacts.elastic.co/packages/7.x/apt stable main&quot; | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
 
-<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="k">update</span> <span class="o">&amp;&amp;</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="n">install</span> <span class="n">logstash</span>
-</code></pre></div>
+sudo apt-get update <span class="err">&amp;&amp;</span> sudo apt-get install logstash
 
 
-<p>root@<s>ip-10-0-35-151</s>:~# find / -name logstash -type f
+root@<span class="nt">&lt;s&gt;</span>ip-10-0-35-151<span class="nt">&lt;/s&gt;</span>:~# find / -name logstash -type f
 /usr/share/logstash/bin/logstash
-/etc/default/logstash</p>
-<p>export PATH=/usr/share/logstash/bin:${PATH}</p>
-<p>systemctl status logstash
+/etc/default/logstash
+
+export PATH=/usr/share/logstash/bin:<span class="cp">${</span><span class="n">PATH</span><span class="cp">}</span>
+
+systemctl status logstash
 systemctl enable logstash
 systemctl start logstash
-systemctl stop logstash</p>
-<p>apt install -y mlocate</p>
-<p>updatedb</p>
-<p>cd /usr/share/logstash
-bin/logstash-plugin list</p>
-<p>cd /etc/logstash/conf.d/
-sudo vi s3_input.conf</p>
-<p>sudo systemctl start logstash</p>
-<p>mkdir /root/logstash</p>
-<p>vi /root/logstash/logstash.conf
+systemctl stop logstash
+
+apt install -y mlocate
+
+updatedb
+
+cd /usr/share/logstash
+bin/logstash-plugin list
+
+cd /etc/logstash/conf.d/
+sudo vi s3_input.conf
+
+sudo systemctl start logstash
+
+mkdir /root/logstash
+
+vi /root/logstash/logstash.conf
 input {
   s3 {
-    "access_key_id" =&gt; "access_key_here"
-    "secret_access_key" =&gt; "secret_key_here"
-    "region" =&gt; "eu-west-2"
-    "bucket" =&gt; "bucket_name_here"
-    #"prefix" =&gt; "Logs"
-    "interval" =&gt; "10"
-    "additional_settings" =&gt; {
-      "force_path_style" =&gt; true
-      "follow_redirects" =&gt; false
+    &quot;access_key_id&quot; =&gt; &quot;access_key_here&quot;
+    &quot;secret_access_key&quot; =&gt; &quot;secret_key_here&quot;
+    &quot;region&quot; =&gt; &quot;eu-west-2&quot;
+    &quot;bucket&quot; =&gt; &quot;bucket_name_here&quot;
+    #&quot;prefix&quot; =&gt; &quot;Logs&quot;
+    &quot;interval&quot; =&gt; &quot;10&quot;
+    &quot;additional_settings&quot; =&gt; {
+      &quot;force_path_style&quot; =&gt; true
+      &quot;follow_redirects&quot; =&gt; false
       }
   }
-}</p>
-<p>output {
+}
+
+output {
   elasticsearch {
-    hosts =&gt; [<elasticsearch_url>]
-    index =&gt; "logs-%{+YYYY.MM.dd}"
-    user =&gt; "username_here"
-    password =&gt; "Password_here"
+    hosts =&gt; [<span class="nt">&lt;elasticsearch</span><span class="err">_url</span><span class="nt">&gt;</span>]
+    index =&gt; &quot;logs-%{+YYYY.MM.dd}&quot;
+    user =&gt; &quot;username_here&quot;
+    password =&gt; &quot;Password_here&quot;
   }
-}</p>
-<p>logstash -f /root/logstash/logstash.conf</p>
+}
+
+logstash -f /root/logstash/logstash.conf
+</code></pre></div>
     </div><!-- /.entry-content -->
 
   </article>

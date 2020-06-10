@@ -30,12 +30,20 @@
 <p>In <a href="/category/misc.html">misc</a>.</p>
 
 </footer><!-- /.post-info --><h1>I am On My Way To learning</h1>
-<p>```Create Ubuntu Ec2 machine on AWS and connect to it using SSH.</p>
-<p>ssh -i <Pem key> ubuntu@<em>.</em>.<em>.</em></p>
-<p>wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -</p>
-<p>sudo apt-get install apt-transport-https</p>
-<p>echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list</p>
-<p>sudo apt-get update &amp;&amp; sudo apt-get install logstash```</p>
+<div class="highlight"><pre><span></span><code><span class="k">Create</span> <span class="n">Ubuntu</span> <span class="n">Ec2</span> <span class="n">machine</span> <span class="k">on</span> <span class="n">AWS</span> <span class="k">and</span> <span class="k">connect</span> <span class="k">to</span> <span class="n">it</span> <span class="k">using</span> <span class="n">SSH</span><span class="p">.</span>
+
+<span class="n">ssh</span> <span class="o">-</span><span class="n">i</span> <span class="o">&lt;</span><span class="n">Pem</span> <span class="k">key</span><span class="o">&gt;</span> <span class="n">ubuntu</span><span class="o">@*</span><span class="p">.</span><span class="o">*</span><span class="p">.</span><span class="o">*</span><span class="p">.</span><span class="o">*</span>
+
+<span class="n">wget</span> <span class="o">-</span><span class="n">qO</span> <span class="o">-</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">artifacts</span><span class="p">.</span><span class="n">elastic</span><span class="p">.</span><span class="n">co</span><span class="o">/</span><span class="n">GPG</span><span class="o">-</span><span class="k">KEY</span><span class="o">-</span><span class="n">elasticsearch</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="k">key</span> <span class="k">add</span> <span class="o">-</span>
+
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="n">install</span> <span class="n">apt</span><span class="o">-</span><span class="n">transport</span><span class="o">-</span><span class="n">https</span>
+
+<span class="n">echo</span> <span class="ss">&quot;deb https://artifacts.elastic.co/packages/7.x/apt stable main&quot;</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">tee</span> <span class="o">-</span><span class="n">a</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="p">.</span><span class="n">list</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">elastic</span><span class="o">-</span><span class="mi">7</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">list</span>
+
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="k">update</span> <span class="o">&amp;&amp;</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="n">install</span> <span class="n">logstash</span>
+</code></pre></div>
+
+
 <p>root@<s>ip-10-0-35-151</s>:~# find / -name logstash -type f
 /usr/share/logstash/bin/logstash
 /etc/default/logstash</p>

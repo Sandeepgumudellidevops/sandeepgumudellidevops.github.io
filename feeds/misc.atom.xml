@@ -1,53 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Devops blog - misc</title><link href="/" rel="alternate"></link><link href="/feeds/misc.atom.xml" rel="self"></link><id>/</id><updated>2020-10-06T00:00:00+02:00</updated><entry><title>Install logstash and configure using s3 bucket on UBUNTU</title><link href="/install-logstash-and-configure-using-s3-bucket-on-ubuntu.html" rel="alternate"></link><published>2020-10-06T00:00:00+02:00</published><updated>2020-10-06T00:00:00+02:00</updated><author><name>Sandeep Gumudelli</name></author><id>tag:None,2020-10-06:/install-logstash-and-configure-using-s3-bucket-on-ubuntu.html</id><summary type="html">&lt;h1&gt;I am On My Way To learning&lt;/h1&gt;
-&lt;p&gt;Create Ubuntu Ec2 machine on AWS and connect to it using SSH.&lt;/p&gt;
-&lt;p&gt;ssh -i &lt;Pem key&gt; ubuntu@&lt;em&gt;.&lt;/em&gt;.&lt;em&gt;.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -&lt;/p&gt;
-&lt;p&gt;sudo apt-get install apt-transport-https&lt;/p&gt;
-&lt;p&gt;echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee …&lt;/p&gt;</summary><content type="html">&lt;h1&gt;I am On My Way To learning&lt;/h1&gt;
-&lt;p&gt;Create Ubuntu Ec2 machine on AWS and connect to it using SSH.&lt;/p&gt;
-&lt;p&gt;ssh -i &lt;Pem key&gt; ubuntu@&lt;em&gt;.&lt;/em&gt;.&lt;em&gt;.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -&lt;/p&gt;
-&lt;p&gt;sudo apt-get install apt-transport-https&lt;/p&gt;
-&lt;p&gt;echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list&lt;/p&gt;
-&lt;p&gt;sudo apt-get update &amp;amp;&amp;amp; sudo apt-get install logstash&lt;/p&gt;
-&lt;p&gt;root@ip-10-0-35-151:~# find / -name logstash -type f
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;```Create Ubuntu Ec2 machine on AWS and connect to it using SSH.
+
+ssh -i &lt;span class="nt"&gt;&amp;lt;Pem&lt;/span&gt; &lt;span class="err"&gt;key&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt; ubuntu@*.*.*.*
+
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+
+sudo apt-get install apt-transport-https
+
+echo &amp;quot;deb https://artifacts.elastic.co/packages/7.x/apt stable main …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;h1&gt;I am On My Way To learning&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;```Create Ubuntu Ec2 machine on AWS and connect to it using SSH.
+
+ssh -i &lt;span class="nt"&gt;&amp;lt;Pem&lt;/span&gt; &lt;span class="err"&gt;key&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt; ubuntu@*.*.*.*
+
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+
+sudo apt-get install apt-transport-https
+
+echo &amp;quot;deb https://artifacts.elastic.co/packages/7.x/apt stable main&amp;quot; | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+
+sudo apt-get update &lt;span class="err"&gt;&amp;amp;&amp;amp;&lt;/span&gt; sudo apt-get install logstash```
+
+root@&lt;span class="nt"&gt;&amp;lt;s&amp;gt;&lt;/span&gt;ip-10-0-35-151&lt;span class="nt"&gt;&amp;lt;/s&amp;gt;&lt;/span&gt;:~# find / -name logstash -type f
 /usr/share/logstash/bin/logstash
-/etc/default/logstash&lt;/p&gt;
-&lt;p&gt;export PATH=/usr/share/logstash/bin:${PATH}&lt;/p&gt;
-&lt;p&gt;systemctl status logstash
+/etc/default/logstash
+
+export PATH=/usr/share/logstash/bin:&lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="n"&gt;PATH&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt;
+
+systemctl status logstash
 systemctl enable logstash
 systemctl start logstash
-systemctl stop logstash&lt;/p&gt;
-&lt;p&gt;apt install -y mlocate&lt;/p&gt;
-&lt;p&gt;updatedb&lt;/p&gt;
-&lt;p&gt;cd /usr/share/logstash
-bin/logstash-plugin list&lt;/p&gt;
-&lt;p&gt;cd /etc/logstash/conf.d/
-sudo vi s3_input.conf&lt;/p&gt;
-&lt;p&gt;sudo systemctl start logstash&lt;/p&gt;
-&lt;p&gt;mkdir /root/logstash&lt;/p&gt;
-&lt;p&gt;vi /root/logstash/logstash.conf
+systemctl stop logstash
+
+apt install -y mlocate
+
+updatedb
+
+cd /usr/share/logstash
+bin/logstash-plugin list
+
+cd /etc/logstash/conf.d/
+sudo vi s3_input.conf
+
+sudo systemctl start logstash
+
+mkdir /root/logstash
+
+vi /root/logstash/logstash.conf
 input {
-  s3 {
-    "access_key_id" =&amp;gt; "access_key_here"
-    "secret_access_key" =&amp;gt; "secret_key_here"
-    "region" =&amp;gt; "eu-west-2"
-    "bucket" =&amp;gt; "bucket_name_here"
-    #"prefix" =&amp;gt; "Logs"
-    "interval" =&amp;gt; "10"
-    "additional_settings" =&amp;gt; {
-      "force_path_style" =&amp;gt; true
-      "follow_redirects" =&amp;gt; false
-      }
-  }
-}&lt;/p&gt;
-&lt;p&gt;output {
-  elasticsearch {
-    hosts =&amp;gt; [&lt;elasticsearch_url&gt;]
-    index =&amp;gt; "logs-%{+YYYY.MM.dd}"
-    user =&amp;gt; "username_here"
-    password =&amp;gt; "Password_here"
-  }
-}&lt;/p&gt;
-&lt;p&gt;logstash -f /root/logstash/logstash.conf&lt;/p&gt;</content><category term="misc"></category></entry></feed>
+s3 {
+    &amp;quot;access_key_id&amp;quot; =&amp;gt; &amp;quot;access_key_here&amp;quot;
+    &amp;quot;secret_access_key&amp;quot; =&amp;gt; &amp;quot;secret_key_here&amp;quot;
+    &amp;quot;region&amp;quot; =&amp;gt; &amp;quot;eu-west-2&amp;quot;
+    &amp;quot;bucket&amp;quot; =&amp;gt; &amp;quot;bucket_name_here&amp;quot;
+    #&amp;quot;prefix&amp;quot; =&amp;gt; &amp;quot;Logs&amp;quot;
+    &amp;quot;interval&amp;quot; =&amp;gt; &amp;quot;10&amp;quot;
+    &amp;quot;additional_settings&amp;quot; =&amp;gt; {
+    &amp;quot;force_path_style&amp;quot; =&amp;gt; true
+    &amp;quot;follow_redirects&amp;quot; =&amp;gt; false
+    }
+}
+}
+
+output {
+elasticsearch {
+    hosts =&amp;gt; [&lt;span class="nt"&gt;&amp;lt;elasticsearch&lt;/span&gt;&lt;span class="err"&gt;_url&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;]
+    index =&amp;gt; &amp;quot;logs-%{+YYYY.MM.dd}&amp;quot;
+    user =&amp;gt; &amp;quot;username_here&amp;quot;
+    password =&amp;gt; &amp;quot;Password_here&amp;quot;
+}
+}
+
+logstash -f /root/logstash/logstash.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="misc"></category></entry></feed>

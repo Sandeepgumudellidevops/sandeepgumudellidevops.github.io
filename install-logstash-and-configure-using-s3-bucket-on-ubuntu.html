@@ -35,52 +35,70 @@
 <p>In <a href="/category/misc.html">misc</a>.</p>
 
 </footer><!-- /.post-info -->      <h1>I am On My Way To learning</h1>
-<p>Create Ubuntu Ec2 machine on AWS and connect to it using SSH.</p>
-<p>ssh -i <Pem key> ubuntu@<em>.</em>.<em>.</em></p>
-<p>wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -</p>
-<p>sudo apt-get install apt-transport-https</p>
-<p>echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list</p>
-<p>sudo apt-get update &amp;&amp; sudo apt-get install logstash</p>
-<p>root@ip-10-0-35-151:~# find / -name logstash -type f
+<div class="highlight"><pre><span></span><code>```Create Ubuntu Ec2 machine on AWS and connect to it using SSH.
+
+ssh -i <span class="nt">&lt;Pem</span> <span class="err">key</span><span class="nt">&gt;</span> ubuntu@*.*.*.*
+
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+
+sudo apt-get install apt-transport-https
+
+echo &quot;deb https://artifacts.elastic.co/packages/7.x/apt stable main&quot; | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+
+sudo apt-get update <span class="err">&amp;&amp;</span> sudo apt-get install logstash```
+
+root@<span class="nt">&lt;s&gt;</span>ip-10-0-35-151<span class="nt">&lt;/s&gt;</span>:~# find / -name logstash -type f
 /usr/share/logstash/bin/logstash
-/etc/default/logstash</p>
-<p>export PATH=/usr/share/logstash/bin:${PATH}</p>
-<p>systemctl status logstash
+/etc/default/logstash
+
+export PATH=/usr/share/logstash/bin:<span class="cp">${</span><span class="n">PATH</span><span class="cp">}</span>
+
+systemctl status logstash
 systemctl enable logstash
 systemctl start logstash
-systemctl stop logstash</p>
-<p>apt install -y mlocate</p>
-<p>updatedb</p>
-<p>cd /usr/share/logstash
-bin/logstash-plugin list</p>
-<p>cd /etc/logstash/conf.d/
-sudo vi s3_input.conf</p>
-<p>sudo systemctl start logstash</p>
-<p>mkdir /root/logstash</p>
-<p>vi /root/logstash/logstash.conf
+systemctl stop logstash
+
+apt install -y mlocate
+
+updatedb
+
+cd /usr/share/logstash
+bin/logstash-plugin list
+
+cd /etc/logstash/conf.d/
+sudo vi s3_input.conf
+
+sudo systemctl start logstash
+
+mkdir /root/logstash
+
+vi /root/logstash/logstash.conf
 input {
-  s3 {
-    "access_key_id" =&gt; "access_key_here"
-    "secret_access_key" =&gt; "secret_key_here"
-    "region" =&gt; "eu-west-2"
-    "bucket" =&gt; "bucket_name_here"
-    #"prefix" =&gt; "Logs"
-    "interval" =&gt; "10"
-    "additional_settings" =&gt; {
-      "force_path_style" =&gt; true
-      "follow_redirects" =&gt; false
-      }
-  }
-}</p>
-<p>output {
-  elasticsearch {
-    hosts =&gt; [<elasticsearch_url>]
-    index =&gt; "logs-%{+YYYY.MM.dd}"
-    user =&gt; "username_here"
-    password =&gt; "Password_here"
-  }
-}</p>
-<p>logstash -f /root/logstash/logstash.conf</p>
+s3 {
+    &quot;access_key_id&quot; =&gt; &quot;access_key_here&quot;
+    &quot;secret_access_key&quot; =&gt; &quot;secret_key_here&quot;
+    &quot;region&quot; =&gt; &quot;eu-west-2&quot;
+    &quot;bucket&quot; =&gt; &quot;bucket_name_here&quot;
+    #&quot;prefix&quot; =&gt; &quot;Logs&quot;
+    &quot;interval&quot; =&gt; &quot;10&quot;
+    &quot;additional_settings&quot; =&gt; {
+    &quot;force_path_style&quot; =&gt; true
+    &quot;follow_redirects&quot; =&gt; false
+    }
+}
+}
+
+output {
+elasticsearch {
+    hosts =&gt; [<span class="nt">&lt;elasticsearch</span><span class="err">_url</span><span class="nt">&gt;</span>]
+    index =&gt; &quot;logs-%{+YYYY.MM.dd}&quot;
+    user =&gt; &quot;username_here&quot;
+    password =&gt; &quot;Password_here&quot;
+}
+}
+
+logstash -f /root/logstash/logstash.conf
+</code></pre></div>
     </div><!-- /.entry-content -->
 
   </article>
